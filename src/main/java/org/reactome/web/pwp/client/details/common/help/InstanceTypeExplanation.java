@@ -73,7 +73,7 @@ public abstract class InstanceTypeExplanation {
                 break;
             case OTHER_ENTITY:
                 explanation = "Entities that we are unable or unwilling to describe in chemical detail and cannot be put in any other class.<p>" +
-                        "Can be used to represent complex structures in the cell that take part in a reaction but which we cannot or do not want to define molecularly, e.g. cell membrane, Holliday structure";
+                        "Can be used to represent complex datasets in the cell that take part in a reaction but which we cannot or do not want to define molecularly, e.g. cell membrane, Holliday dataset";
                 break;
             case POLYMER:
                 explanation = "Molecules that consist of an indeterminate number of repeated units. Includes complexes whose stoichiometry is variable or unknown.<p>" +

@@ -17,9 +17,7 @@ public enum DetailsTabType {
     /* NOTE: If a new tab is added, make sure GAModule correspondence method is updated */
     DESCRIPTION("DD", "Description"),
     PARTICIPATING_MOLECULES("MT", "Molecules"),
-    STRUCTURES("ST", "Structures"),
-    EXPRESSION("EX", "Expression"),
-    ANALYSIS("AN", "Analysis"),
+    DATASET("DS", "Dataset"),
     PARTICIPATING_PROCESSES("PT", "Processes"),
     DOWNLOADS("DT", "Downloads");
 
@@ -82,9 +80,7 @@ public enum DetailsTabType {
         switch (this){
             case DESCRIPTION: return DetailsTabResources.INSTANCE.descriptionIcon();
             case PARTICIPATING_MOLECULES: return DetailsTabResources.INSTANCE.moleculesIcon();
-            case STRUCTURES: return DetailsTabResources.INSTANCE.structuresIcon();
-            case EXPRESSION: return DetailsTabResources.INSTANCE.expressionIcon();
-            case ANALYSIS: return DetailsTabResources.INSTANCE.analysisIcon();
+            case DATASET: return DetailsTabResources.INSTANCE.datasetIcon();
             case DOWNLOADS: return DetailsTabResources.INSTANCE.downloadsIcon();
             default: return CommonImages.INSTANCE.exclamation();
         }
@@ -94,9 +90,7 @@ public enum DetailsTabType {
         switch (this){
             case DESCRIPTION: return DetailsTabResources.INSTANCE.description();
             case PARTICIPATING_MOLECULES: return DetailsTabResources.INSTANCE.molecules();
-            case STRUCTURES: return DetailsTabResources.INSTANCE.structures();
-            case EXPRESSION: return DetailsTabResources.INSTANCE.expression();
-            case ANALYSIS: return DetailsTabResources.INSTANCE.analysis();
+            case DATASET: return DetailsTabResources.INSTANCE.dataset();
             case DOWNLOADS: return DetailsTabResources.INSTANCE.downloads();
             default: return CommonImages.INSTANCE.exclamation();
         }
@@ -106,9 +100,7 @@ public enum DetailsTabType {
         switch (this){
             case DESCRIPTION: return DetailsTabResources.INSTANCE.descriptionTxt();
             case PARTICIPATING_MOLECULES: return DetailsTabResources.INSTANCE.moleculesTxt();
-            case STRUCTURES: return DetailsTabResources.INSTANCE.structuresTxt();
-            case EXPRESSION: return DetailsTabResources.INSTANCE.expressionTxt();
-            case ANALYSIS: return DetailsTabResources.INSTANCE.analysisTxt();
+            case DATASET: return DetailsTabResources.INSTANCE.datasetTxt();
             case DOWNLOADS: return DetailsTabResources.INSTANCE.downloadsTxt();
             default: throw new RuntimeException("No explanation found for " +  this);
         }
@@ -117,15 +109,6 @@ public enum DetailsTabType {
     public interface DetailsTabResources extends ClientBundle {
 
         DetailsTabResources INSTANCE = GWT.create(DetailsTabResources.class);
-
-        @Source("images/analysis.png")
-        ImageResource analysis();
-
-        @Source("images/analysis_icon.png")
-        ImageResource analysisIcon();
-
-        @Source("text/analysis.txt")
-        TextResource analysisTxt();
 
         @Source("images/description.png")
         ImageResource description();
@@ -145,15 +128,6 @@ public enum DetailsTabType {
         @Source("text/downloads.txt")
         TextResource downloadsTxt();
 
-        @Source("images/expression.png")
-        ImageResource expression();
-
-        @Source("images/expression_icon.png")
-        ImageResource expressionIcon();
-
-        @Source("text/expression.txt")
-        TextResource expressionTxt();
-
         @Source("images/molecules.png")
         ImageResource molecules();
 
@@ -163,13 +137,13 @@ public enum DetailsTabType {
         @Source("text/molecules.txt")
         TextResource moleculesTxt();
 
-        @Source("images/structures.png")
-        ImageResource structures();
+        @Source("images/dataset.png")
+        ImageResource dataset();
 
-        @Source("images/structures_icon.png")
-        ImageResource structuresIcon();
+        @Source("images/dataset_icon.png")
+        ImageResource datasetIcon();
 
-        @Source("text/structures.txt")
-        TextResource structuresTxt();
+        @Source("text/dataset.txt")
+        TextResource datasetTxt();
     }
 }

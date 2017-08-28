@@ -15,8 +15,6 @@ import org.reactome.web.pwp.client.common.events.*;
 import org.reactome.web.pwp.client.common.handlers.*;
 import org.reactome.web.pwp.client.common.module.BrowserModule;
 import org.reactome.web.pwp.client.details.tabs.DetailsTabType;
-import org.reactome.web.pwp.client.details.tabs.analysis.widgets.summary.events.ResourceChangedEvent;
-import org.reactome.web.pwp.client.details.tabs.analysis.widgets.summary.handlers.ResourceChangedHandler;
 import org.reactome.web.pwp.client.manager.state.token.Token;
 import org.reactome.web.pwp.client.manager.state.token.TokenMalformedException;
 import org.reactome.web.pwp.client.manager.title.TitleManager;
@@ -30,8 +28,7 @@ import java.util.List;
  */
 public class StateManager implements BrowserModule.Manager, ValueChangeHandler<String>,
         State.StateLoadedHandler, StateChangedHandler, DatabaseObjectSelectedHandler, DetailsTabChangedHandler,
-        DiagramObjectsFlagResetHandler, AnalysisCompletedHandler, AnalysisResetHandler, ResourceChangedHandler,
-        ToolSelectedHandler {
+        DiagramObjectsFlagResetHandler, ToolSelectedHandler {
 
     private EventBus eventBus;
 
@@ -47,10 +44,7 @@ public class StateManager implements BrowserModule.Manager, ValueChangeHandler<S
         this.eventBus.addHandler(DatabaseObjectSelectedEvent.TYPE, this);
         this.eventBus.addHandler(DetailsTabChangedEvent.TYPE, this);
         this.eventBus.addHandler(ToolSelectedEvent.TYPE, this);
-        this.eventBus.addHandler(AnalysisCompletedEvent.TYPE, this);
-        this.eventBus.addHandler(AnalysisResetEvent.TYPE, this);
         this.eventBus.addHandler(DiagramObjectsFlagResetEvent.TYPE, this);
-        this.eventBus.addHandler(ResourceChangedEvent.TYPE, this);
     }
 
     @Override
@@ -66,27 +60,6 @@ public class StateManager implements BrowserModule.Manager, ValueChangeHandler<S
         } catch (TokenMalformedException e) {
             this.tokenError(value);
         }
-    }
-
-    @Override
-    public void onAnalysisCompleted(AnalysisCompletedEvent event) {
-        AnalysisSummary summary = event.getAnalysisResult().getSummary();
-        AnalysisClient.addValidToken(summary.getToken());
-
-        List<ResourceSummary> resources = event.getAnalysisResult().getResourceSummary();
-        ResourceSummary resource = resources.size() == 2 ? resources.get(1) : resources.get(0); //IMPORTANT!
-
-        State desiredState = new State(this.currentState);
-        desiredState.setDetailsTab(DetailsTabType.ANALYSIS);
-        desiredState.setAnalysisParameters(summary.getToken(), resource.getResource());
-        this.eventBus.fireEventFromSource(new StateChangedEvent(desiredState), this);
-    }
-
-    @Override
-    public void onAnalysisReset() {
-        State desiredState = new State(this.currentState);
-        desiredState.setAnalysisParameters(null, null);
-        this.eventBus.fireEventFromSource(new StateChangedEvent(desiredState), this);
     }
 
     @Override
@@ -153,13 +126,6 @@ public class StateManager implements BrowserModule.Manager, ValueChangeHandler<S
     public void onDiagramObjectsFlagReset(DiagramObjectsFlagResetEvent event) {
         State desiredState = new State(this.currentState);
         desiredState.setFlag(null);
-        this.eventBus.fireEventFromSource(new StateChangedEvent(desiredState), this);
-    }
-
-    @Override
-    public void onResourceChanged(ResourceChangedEvent event) {
-        State desiredState = new State(this.currentState);
-        desiredState.setAnalysisParameters(this.currentState.getAnalysisStatus().getToken(), event.getResource());
         this.eventBus.fireEventFromSource(new StateChangedEvent(desiredState), this);
     }
 
